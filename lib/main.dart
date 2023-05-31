@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swipe_it/screens/asProvider/provider_wrapper.dart';
+import 'package:swipe_it/screens/swipe_test.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,6 +26,8 @@ class _MyAppState extends State<MyApp> {
         ),
         home: // const AuthPage());
             const ProviderWrapperScreen());
+
+    //MyHomePage());
 
     //  const ChatScreen());
   }

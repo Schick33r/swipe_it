@@ -20,7 +20,8 @@ class ChatBubble extends StatelessWidget {
               alignment: Alignment.topRight,
               child: Container(
                 decoration: BoxDecoration(
-                    color: cardBg, borderRadius: BorderRadius.circular(8)),
+                    color: brownMainColor,
+                    borderRadius: BorderRadius.circular(8)),
                 height: 50,
                 width: 200,
                 child: Padding(
@@ -49,7 +50,8 @@ class ChatBubble extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: Container(
                 decoration: BoxDecoration(
-                    color: cardBg, borderRadius: BorderRadius.circular(8)),
+                    color: brownLightest,
+                    borderRadius: BorderRadius.circular(8)),
                 height: 50,
                 width: 200,
                 child: Padding(

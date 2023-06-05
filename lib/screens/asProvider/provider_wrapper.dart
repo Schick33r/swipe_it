@@ -4,7 +4,6 @@ import 'package:swipe_it/globals.dart';
 import 'package:swipe_it/screens/asProvider/providerWidgets/providerAppBar.dart';
 import 'package:swipe_it/screens/asProvider/provider_Chats.dart';
 import 'package:swipe_it/screens/asProvider/provider_swipe.dart';
-import 'package:swipe_it/screens/chat_screen.dart';
 import 'package:swipe_it/screens/profile_screen.dart';
 
 class ProviderWrapperScreen extends StatefulWidget {

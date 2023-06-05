@@ -47,7 +47,7 @@ class ChatAppBar extends StatelessWidget {
             // MORE BUTTON
             IconButton(
               onPressed: () {},
-              icon: Icon(Icons.more_horiz),
+              icon: const Icon(Icons.more_horiz),
               iconSize: 28,
               color: whiteColor,
             )

@@ -4,10 +4,12 @@ import 'package:swipe_cards/swipe_cards.dart';
 import 'provider_swipe_content_card.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,14 +18,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Swipe Cards Demo'),
+      home: const MyHomePage(title: 'Swipe Cards Demo'),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, this.title}) : super(key: key);
+  const MyHomePage({Key? key, this.title}) : super(key: key);
 
   final String? title;
 
@@ -32,10 +34,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<SwipeItem> _swipeItems = <SwipeItem>[];
+  final List<SwipeItem> _swipeItems = <SwipeItem>[];
   MatchEngine? _matchEngine;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  List<String> _names = [
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final List<String> _names = [
     "Red",
     "Blue",
     "Green",
@@ -45,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
     "Purple",
     "Pink"
   ];
-  List<Color> _colors = [
+  final List<Color> _colors = [
     Colors.red,
     Colors.blue,
     Colors.green,
@@ -64,19 +66,19 @@ class _MyHomePageState extends State<MyHomePage> {
           likeAction: () {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Liked ${_names[i]}"),
-              duration: Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
             ));
           },
           nopeAction: () {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Nope ${_names[i]}"),
-              duration: Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
             ));
           },
           superlikeAction: () {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Superliked ${_names[i]}"),
-              duration: Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
             ));
           },
           onSlideUpdate: (SlideRegion? region) async {
@@ -97,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
         body: Container(
             child: Stack(children: [
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height - kToolbarHeight,
             child: SwipeCards(
               matchEngine: _matchEngine!,
@@ -107,12 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: _swipeItems[index].content.color,
                   child: Text(
                     _swipeItems[index].content.text,
-                    style: TextStyle(fontSize: 100),
+                    style: const TextStyle(fontSize: 100),
                   ),
                 );
               },
               onStackFinished: () {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text("Stack Finished"),
                   duration: Duration(milliseconds: 500),
                 ));
@@ -129,21 +131,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.all(3.0),
                 decoration:
                     BoxDecoration(border: Border.all(color: Colors.green)),
-                child: Text('Like'),
+                child: const Text('Like'),
               ),
               nopeTag: Container(
                 margin: const EdgeInsets.all(15.0),
                 padding: const EdgeInsets.all(3.0),
                 decoration:
                     BoxDecoration(border: Border.all(color: Colors.red)),
-                child: Text('Nope'),
+                child: const Text('Nope'),
               ),
               superLikeTag: Container(
                 margin: const EdgeInsets.all(15.0),
                 padding: const EdgeInsets.all(3.0),
                 decoration:
                     BoxDecoration(border: Border.all(color: Colors.orange)),
-                child: Text('Super Like'),
+                child: const Text('Super Like'),
               ),
             ),
           ),
@@ -156,17 +158,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       _matchEngine!.currentItem?.nope();
                     },
-                    child: Text("Nope")),
+                    child: const Text("Nope")),
                 ElevatedButton(
                     onPressed: () {
                       _matchEngine!.currentItem?.superLike();
                     },
-                    child: Text("Superlike")),
+                    child: const Text("Superlike")),
                 ElevatedButton(
                     onPressed: () {
                       _matchEngine!.currentItem?.like();
                     },
-                    child: Text("Like"))
+                    child: const Text("Like"))
               ],
             ),
           )

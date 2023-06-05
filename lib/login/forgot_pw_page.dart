@@ -27,7 +27,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
+            return const AlertDialog(
               content: Text('Password reset link sent! Check your email!'),
             );
           }).then((value) => Navigator.pop(context));
@@ -112,7 +112,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               child: GestureDetector(
                 onTap: passwordReset,
                 child: Container(
-                  padding: EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20.0),
                   decoration: BoxDecoration(
                     color: brownMainColor,
                     borderRadius: BorderRadius.circular(4.0),

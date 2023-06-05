@@ -70,7 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 35),
+                const SizedBox(height: 35),
 
                 SvgPicture.asset(
                   'assets/mz_icon_brown.svg',
@@ -230,7 +230,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: GestureDetector(
                     onTap: signUp,
                     child: Container(
-                      padding: EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(20.0),
                       decoration: BoxDecoration(
                         color: brownMainColor,
                         borderRadius: BorderRadius.circular(4.0),

@@ -12,10 +12,10 @@ class ProviderSwipeScreen extends StatefulWidget {
 }
 
 class _ProviderSwipeScreenState extends State<ProviderSwipeScreen> {
-  List<SwipeItem> _swipeItems = <SwipeItem>[];
+  final List<SwipeItem> _swipeItems = <SwipeItem>[];
   MatchEngine? _matchEngine;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  List<String> _names = [
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final List<String> _names = [
     "Red",
     "Blue",
     "Green",
@@ -25,7 +25,7 @@ class _ProviderSwipeScreenState extends State<ProviderSwipeScreen> {
     "Purple",
     "Pink"
   ];
-  List<Color> _colors = [
+  final List<Color> _colors = [
     Colors.red,
     Colors.blue,
     Colors.green,

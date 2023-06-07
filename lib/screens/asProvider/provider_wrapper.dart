@@ -15,6 +15,7 @@ class ProviderWrapperScreen extends StatefulWidget {
 
 class _ProviderWrapperScreenState extends State<ProviderWrapperScreen> {
   var _currentIndex = 0;
+  List<String> items = <String>['WG-ZIMMER STUTTGART', 'WG-ZIMMER KARLSRUHE'];
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +92,9 @@ class _ProviderWrapperScreenState extends State<ProviderWrapperScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            const ProviderAppBar(),
+            ProviderAppBar(
+              items: items,
+            ),
 
             buildView()!
             //const Text('ProviderWrappeScreen')

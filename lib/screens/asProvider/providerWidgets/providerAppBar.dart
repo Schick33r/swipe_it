@@ -3,13 +3,36 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:swipe_it/globals.dart';
 
 class ProviderAppBar extends StatefulWidget {
-  const ProviderAppBar({super.key});
+  List<String> items;
+
+  ProviderAppBar({super.key, required this.items});
 
   @override
   State<ProviderAppBar> createState() => _ProviderAppBarState();
 }
 
 class _ProviderAppBarState extends State<ProviderAppBar> {
+  late String selectedItem;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedItem = widget.items.first;
+  }
+
+  PopupMenuItem<String> _buildPopupMenuItem(String item) {
+    return PopupMenuItem<String>(
+        value: item,
+        child: Container(
+          child: Text(item,
+              style: GoogleFonts.inter(
+                  letterSpacing: 2,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: brownLightColor)),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,14 +41,24 @@ class _ProviderAppBarState extends State<ProviderAppBar> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(
-                onPressed: () {},
+            PopupMenuButton<String>(
+                color: bgColor,
                 icon: Icon(
                   Icons.arrow_drop_down,
                   size: 38,
                   color: brownMainColor,
-                )),
-            Text('WG-ZIMMER STUTTGART',
+                ),
+                initialValue: selectedItem,
+                // Callback that sets the selected popup menu item.
+                onSelected: (String item) {
+                  setState(() {
+                    selectedItem = item;
+                  });
+                },
+                itemBuilder: (BuildContext context) => widget.items
+                    .map((item) => _buildPopupMenuItem(item))
+                    .toList()),
+            Text(selectedItem,
                 style: GoogleFonts.inter(
                     letterSpacing: 2,
                     fontSize: 16,

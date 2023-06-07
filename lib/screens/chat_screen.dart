@@ -10,8 +10,9 @@ class ChatScreen extends StatefulWidget {
   State<StatefulWidget> createState() => ChatScreenState();
 }
 
-class ChatScreenState extends State<ChatScreen> {
+class ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   final TextEditingController _chatMessageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   var chatMessages = [
     {
@@ -44,6 +45,36 @@ class ChatScreenState extends State<ChatScreen> {
       'time': '19:10',
       'messageFromCurrentUser': true
     },
+    {
+      'name': 'David',
+      'message': 'Message 1',
+      'time': '17:32',
+      'messageFromCurrentUser': false
+    },
+    {
+      'name': 'David',
+      'message': 'Message 1',
+      'time': '17:32',
+      'messageFromCurrentUser': false
+    },
+    {
+      'name': 'David',
+      'message': 'Message 1',
+      'time': '17:32',
+      'messageFromCurrentUser': false
+    },
+    {
+      'name': 'David',
+      'message': 'Message 1',
+      'time': '17:32',
+      'messageFromCurrentUser': false
+    },
+    {
+      'name': 'David',
+      'message': 'Message 1',
+      'time': '17:32',
+      'messageFromCurrentUser': false
+    },
   ];
 
   void _addMessageToList(String message, bool messageFromCurrentUser) {
@@ -57,6 +88,45 @@ class ChatScreenState extends State<ChatScreen> {
     });
 
     _chatMessageController.clear();
+  }
+
+  void _scrollChatToMaxExtent() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(
+        _scrollController.position.maxScrollExtent,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _chatMessageController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(
+        _scrollController.position.maxScrollExtent,
+      );
+    }
   }
 
   @override
@@ -76,6 +146,7 @@ class ChatScreenState extends State<ChatScreen> {
                 child: Container(
                     color: bgColor,
                     child: ListView.builder(
+                        controller: _scrollController,
                         itemCount: chatMessages.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Center(
@@ -131,8 +202,11 @@ class ChatScreenState extends State<ChatScreen> {
                       // SEND BUTTON
                       Expanded(
                         child: GestureDetector(
-                          onTap: () => _addMessageToList(
-                              _chatMessageController.text, true),
+                          onTap: () => {
+                            _addMessageToList(
+                                _chatMessageController.text, true),
+                            _scrollChatToMaxExtent()
+                          },
                           child: Container(
                               decoration: BoxDecoration(
                                   color: brownMainColor,

@@ -1,7 +1,10 @@
 package zandb.software.swipeit.data.user.controller;
 
 
+import netscape.javascript.JSObject;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -100,6 +103,10 @@ public class AuthenticationController {
 
         String jwtToken = jwtTokenUtil.generateToken(swipeItUserDetails.getUsername());
 
-        return ResponseEntity.ok(jwtToken);
+        JSONObject responseBody = new JSONObject();
+
+        responseBody.put("jwtToken", jwtToken);
+
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(responseBody.toString());
     }
 }

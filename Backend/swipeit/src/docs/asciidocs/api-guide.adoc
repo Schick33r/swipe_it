@@ -1,0 +1,55 @@
+== Register a client
+
+This request is used to register a new client user on the system. The clients are the users, that are searching for
+a place to live
+
+=== HTTP Request
+
+include::{snippets}/register-client/http-request.adoc[]
+
+=== Request headers
+
+include::{snippets}/register-client/request-headers.adoc[]
+
+=== Response
+
+include::{snippets}/register-client/http-response.adoc[]
+
+== Register a supplier
+
+This request is used to register a new supplier user on the system. The suppliers are users, that are offering
+a place to live
+
+=== HTTP Request
+
+include::{snippets}/register-supplier/http-request.adoc[]
+
+=== Request headers
+
+include::{snippets}/register-supplier/request-headers.adoc[]
+
+=== Response
+
+include::{snippets}/register-supplier/http-response.adoc[]
+
+== Authenticate a user
+
+This request is used to authenticate an existing user on the system. It takes the credentials in a basic authorization
+header and then gives back a JWT Token, which should then be used as a bearer token in the authorization header of
+all further requests
+
+=== HTTP Request
+
+include::{snippets}/authenticate-user/http-request.adoc[]
+
+=== Request headers
+
+include::{snippets}/authenticate-user/request-headers.adoc[]
+
+=== Response
+
+include::{snippets}/authenticate-user/http-response.adoc[]
+
+=== Response fields
+
+include::{snippets}/authenticate-user/response-fields.adoc[]

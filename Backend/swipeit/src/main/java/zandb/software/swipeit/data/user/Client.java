@@ -11,12 +11,6 @@ public class Client extends SwipeItUser {
 
     private String city;
 
-    private String street;
-
-    private String postcode;
-
-    private int streetnumber;
-
     private String biography;
 
     private int height;
@@ -37,30 +31,6 @@ public class Client extends SwipeItUser {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getPostcode() {
-        return postcode;
-    }
-
-    public void setPostcode(String postcode) {
-        this.postcode = postcode;
-    }
-
-    public int getStreetnumber() {
-        return streetnumber;
-    }
-
-    public void setStreetnumber(int streetnumber) {
-        this.streetnumber = streetnumber;
     }
 
     public String getBiography() {

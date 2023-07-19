@@ -53,3 +53,65 @@ include::{snippets}/authenticate-user/http-response.adoc[]
 === Response fields
 
 include::{snippets}/authenticate-user/response-fields.adoc[]
+
+== Get the data of the logged in user
+
+This request is used to get the information about the logged in user. The authentication is done with the JWT token.
+
+=== HTTP Request
+
+include::{snippets}/get-user-client/http-request.adoc[]
+
+=== Request headers
+
+include::{snippets}/get-user-client/request-headers.adoc[]
+
+=== Response if the logged in user is of the type CLIENT
+
+include::{snippets}/get-user-client/http-response.adoc[]
+
+=== Response fields if the logged in user is of the type CLIENT
+
+include::{snippets}/get-user-client/response-fields.adoc[]
+
+=== Response if the logged in user is of the type SUPPLIER
+
+include::{snippets}/get-user-supplier/http-response.adoc[]
+
+=== Response fields if the logged in user is of the type SUPPLIER
+
+include::{snippets}/get-user-supplier/response-fields.adoc[]
+
+== Update the logged in client
+
+This request is used to update the fields of a logged in user of the type CLIENT. It throws an error, if the logged in
+user is of the type SUPPLIER
+
+=== HTTP Request
+
+include::{snippets}/update-user-client/http-request.adoc[]
+
+=== Request headers
+
+include::{snippets}/update-user-client/request-headers.adoc[]
+
+=== Response
+
+include::{snippets}/update-user-client/http-response.adoc[]
+
+== Update the logged in supplier
+
+This request is used to update the fields of a logged in user of the type SUPPLIER. It throws an error, if the logged in
+user is of the type CLIENT
+
+=== HTTP Request
+
+include::{snippets}/update-user-supplier/http-request.adoc[]
+
+=== Request headers
+
+include::{snippets}/update-user-supplier/request-headers.adoc[]
+
+=== Response
+
+include::{snippets}/update-user-supplier/http-response.adoc[]

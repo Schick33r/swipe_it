@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import zandb.software.swipeit.data.tokenblacklist.service.BlacklistedJwtTokenService;
 import zandb.software.swipeit.data.user.details.SwipeItUserDetails;
 import zandb.software.swipeit.data.user.service.SwipeItUserDetailsService;
 
@@ -27,6 +28,9 @@ public class UnauthorizedRequestFilter extends OncePerRequestFilter {
     @Autowired
     private SwipeItUserDetailsService swipeItUserDetailsService;
 
+    @Autowired
+    private BlacklistedJwtTokenService blacklistedJwtTokenService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = request.getHeader("Authorization");
@@ -36,6 +40,10 @@ public class UnauthorizedRequestFilter extends OncePerRequestFilter {
         }
 
         String jwtToken = authorizationHeader.substring(7);
+
+        if (blacklistedJwtTokenService.isTokenBlacklisted(jwtToken)) {
+            throw new IllegalArgumentException("The token was already blacklisted, because the user logged out!");
+        }
 
 
         Claims jwtTokenClaims = jwtTokenUtil.getClaimsFromToken(jwtToken);

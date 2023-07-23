@@ -54,6 +54,23 @@ include::{snippets}/authenticate-user/http-response.adoc[]
 
 include::{snippets}/authenticate-user/response-fields.adoc[]
 
+== Logout a user
+
+This request is used to blacklist the JWT token of the current user, so that he is effectively logged out
+
+=== HTTP Request
+
+include::{snippets}/logout-user/http-request.adoc[]
+
+=== Request headers
+
+include::{snippets}/logout-user/request-headers.adoc[]
+
+=== Response
+
+include::{snippets}/logout-user/http-response.adoc[]
+
+
 == Get the data of the logged in user
 
 This request is used to get the information about the logged in user. The authentication is done with the JWT token.

@@ -2,53 +2,53 @@ package zandb.software.swipeit.data.user.dto;
 
 public class ClientDTO extends SwipeItUserDTO {
 
-    private String country;
+  private String country;
 
-    private String city;
+  private String city;
 
-    private String biography;
+  private String biography;
 
-    private int height;
+  private int height;
 
-    private int age;
+  private int age;
 
-    public String getCountry() {
-        return country;
-    }
+  public String getCountry() {
+    return country;
+  }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
+  public void setCountry(String country) {
+    this.country = country;
+  }
 
-    public String getCity() {
-        return city;
-    }
+  public String getCity() {
+    return city;
+  }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+  public void setCity(String city) {
+    this.city = city;
+  }
 
-    public String getBiography() {
-        return biography;
-    }
+  public String getBiography() {
+    return biography;
+  }
 
-    public void setBiography(String biography) {
-        this.biography = biography;
-    }
+  public void setBiography(String biography) {
+    this.biography = biography;
+  }
 
-    public int getHeight() {
-        return height;
-    }
+  public int getHeight() {
+    return height;
+  }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
+  public void setHeight(int height) {
+    this.height = height;
+  }
 
-    public int getAge() {
-        return age;
-    }
+  public int getAge() {
+    return age;
+  }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
+  public void setAge(int age) {
+    this.age = age;
+  }
 }

@@ -6,4 +6,5 @@ import zandb.software.swipeit.data.image.ClientImage;
 
 @Repository
 public interface ClientImageRepository extends JpaRepository<ClientImage, Long> {
+
 }

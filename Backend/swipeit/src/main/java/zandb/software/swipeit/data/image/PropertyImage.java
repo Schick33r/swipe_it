@@ -1,18 +1,22 @@
 package zandb.software.swipeit.data.image;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import zandb.software.swipeit.data.property.Property;
 
 @Entity
 public class PropertyImage {
 
-    @Id
-    @GeneratedValue
-    private long id;
+  @Id
+  @GeneratedValue
+  private long id;
 
-    private String path;
+  private String path;
 
-    @ManyToOne
-    @JoinColumn(name="property")
-    private Property property;
+  @ManyToOne
+  @JoinColumn(name = "property")
+  private Property property;
 }

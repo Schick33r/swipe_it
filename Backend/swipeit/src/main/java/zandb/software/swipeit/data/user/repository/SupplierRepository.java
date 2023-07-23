@@ -6,4 +6,5 @@ import zandb.software.swipeit.data.user.Supplier;
 
 @Repository
 public interface SupplierRepository extends JpaRepository<Supplier, Long> {
+
 }

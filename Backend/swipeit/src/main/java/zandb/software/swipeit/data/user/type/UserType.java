@@ -2,15 +2,15 @@ package zandb.software.swipeit.data.user.type;
 
 public enum UserType {
 
-    CLIENT("CLIENT"), SUPPLIER("SUPPLIER");
+  CLIENT("CLIENT"), SUPPLIER("SUPPLIER");
 
-    private String type;
+  private String type;
 
-    private UserType(String type) {
-        this.type = type;
-    }
+  private UserType(String type) {
+    this.type = type;
+  }
 
-    public String getType() {
-        return type;
-    }
+  public String getType() {
+    return type;
+  }
 }

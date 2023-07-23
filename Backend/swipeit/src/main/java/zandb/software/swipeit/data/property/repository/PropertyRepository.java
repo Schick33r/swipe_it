@@ -6,4 +6,5 @@ import zandb.software.swipeit.data.property.Property;
 
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Long> {
+
 }

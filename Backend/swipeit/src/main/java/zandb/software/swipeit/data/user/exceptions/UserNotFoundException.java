@@ -2,7 +2,7 @@ package zandb.software.swipeit.data.user.exceptions;
 
 public class UserNotFoundException extends Exception {
 
-    public UserNotFoundException(String message) {
-        super(message);
-    }
+  public UserNotFoundException(String message) {
+    super(message);
+  }
 }

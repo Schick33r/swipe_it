@@ -1,6 +1,16 @@
 package zandb.software.swipeit.docs;
 
-import jakarta.validation.constraints.AssertTrue;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,84 +28,70 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
 import zandb.software.swipeit.data.tokenblacklist.BlacklistedJwtToken;
 import zandb.software.swipeit.data.tokenblacklist.repository.BlacklistedJwtTokenRepository;
 import zandb.software.swipeit.data.user.Client;
-import zandb.software.swipeit.data.user.Supplier;
 import zandb.software.swipeit.data.user.repository.ClientRepository;
-import zandb.software.swipeit.data.user.service.SupplierService;
 import zandb.software.swipeit.data.user.service.SwipeItUserDetailsService;
-
-import java.util.List;
-
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.subsectionWithPath;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class LogoutControllerDocsTest {
 
-    private MockMvc mockMvc;
+  private MockMvc mockMvc;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private SwipeItUserDetailsService swipeItUserDetailsService;
+  @Autowired
+  private SwipeItUserDetailsService swipeItUserDetailsService;
 
-    @Autowired
-    private BlacklistedJwtTokenRepository blacklistedJwtTokenRepository;
+  @Autowired
+  private BlacklistedJwtTokenRepository blacklistedJwtTokenRepository;
 
-    @Autowired
-    private ClientRepository clientRepository;
+  @Autowired
+  private ClientRepository clientRepository;
 
-    @BeforeEach
-    public void setUp(WebApplicationContext webApplicationContext,
-                      RestDocumentationContextProvider restDocumentation) {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .apply(documentationConfiguration(restDocumentation)).alwaysDo(document("{method-name}",
-                        preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
-                .build();
-    }
+  @BeforeEach
+  public void setUp(WebApplicationContext webApplicationContext,
+      RestDocumentationContextProvider restDocumentation) {
+    this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+        .apply(documentationConfiguration(restDocumentation)).alwaysDo(document("{method-name}",
+            preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+        .build();
+  }
 
-    @Test
-    public void logoutUserDocTest() throws Exception {
-        Client client = new Client();
-        client.setUserId(1);
-        client.setUsername("Test");
-        client.setPassword(passwordEncoder.encode("test"));
+  @Test
+  public void logoutUserDocTest() throws Exception {
+    Client client = new Client();
+    client.setUserId(1);
+    client.setUsername("Test");
+    client.setPassword(passwordEncoder.encode("test"));
 
-        clientRepository.save(client);
+    clientRepository.save(client);
 
-        UserDetails swipeItUserDetails = swipeItUserDetailsService.loadUserByUsername("Test");
+    UserDetails swipeItUserDetails = swipeItUserDetailsService.loadUserByUsername("Test");
 
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                swipeItUserDetails, null, swipeItUserDetails.getAuthorities());
-        usernamePasswordAuthenticationToken
-                .setDetails(new WebAuthenticationDetailsSource());
+    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+        swipeItUserDetails, null, swipeItUserDetails.getAuthorities());
+    usernamePasswordAuthenticationToken
+        .setDetails(new WebAuthenticationDetailsSource());
 
-        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
+    this.mockMvc.perform(post("/logoutUser").header("Authorization",
+            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUZXN0IiwiaWF0IjoxNjg5NzkzNTUwLCJleHAiOjE3MjEzMjk1NTB9.DbxoXgPgcR1E5MsTqrallAX17yJd_m_I9v6ZH8j2hFYej2A_40syPjAO_UBj5GqaQYIt6zWsdkblLe6jxRXzbA"))
+        .andExpect(status().isOk())
+        .andDo(document("logout-user",
+            requestHeaders(headerWithName("Authorization").description(
+                "The authorization header using the basic auth method"))));
 
-        this.mockMvc.perform(post("/logoutUser").header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUZXN0IiwiaWF0IjoxNjg5NzkzNTUwLCJleHAiOjE3MjEzMjk1NTB9.DbxoXgPgcR1E5MsTqrallAX17yJd_m_I9v6ZH8j2hFYej2A_40syPjAO_UBj5GqaQYIt6zWsdkblLe6jxRXzbA")).andExpect(status().isOk())
-                .andDo(document("logout-user",
-                        requestHeaders(headerWithName("Authorization").description("The authorization header using the basic auth method"))));
+    List<BlacklistedJwtToken> blacklistedJwtTokens = blacklistedJwtTokenRepository.findAll();
 
-        List<BlacklistedJwtToken> blacklistedJwtTokens = blacklistedJwtTokenRepository.findAll();
-
-        Assertions.assertEquals(blacklistedJwtTokens.size(), 1);
-        Assertions.assertEquals(blacklistedJwtTokens.get(0).getToken(), "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUZXN0IiwiaWF0IjoxNjg5NzkzNTUwLCJleHAiOjE3MjEzMjk1NTB9.DbxoXgPgcR1E5MsTqrallAX17yJd_m_I9v6ZH8j2hFYej2A_40syPjAO_UBj5GqaQYIt6zWsdkblLe6jxRXzbA");
-    }
+    Assertions.assertEquals(blacklistedJwtTokens.size(), 1);
+    Assertions.assertEquals(blacklistedJwtTokens.get(0).getToken(),
+        "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUZXN0IiwiaWF0IjoxNjg5NzkzNTUwLCJleHAiOjE3MjEzMjk1NTB9.DbxoXgPgcR1E5MsTqrallAX17yJd_m_I9v6ZH8j2hFYej2A_40syPjAO_UBj5GqaQYIt6zWsdkblLe6jxRXzbA");
+  }
 }

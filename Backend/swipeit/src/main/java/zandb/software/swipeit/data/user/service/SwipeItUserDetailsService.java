@@ -13,28 +13,32 @@ import zandb.software.swipeit.data.user.repository.SwipeItUserRepository;
 @Service
 public class SwipeItUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private SwipeItUserRepository userRepository;
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SwipeItUser user = userRepository.findByUsername(username);
+  @Autowired
+  private SwipeItUserRepository userRepository;
 
-        if (user == null) {
-            throw new UsernameNotFoundException(username);
-        }
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    SwipeItUser user = userRepository.findByUsername(username);
 
-        return new SwipeItUserDetails(user);
+    if (user == null) {
+      throw new UsernameNotFoundException(username);
     }
 
-    public long getIdOfLoggedInUser() {
-        return ((SwipeItUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId();
-    }
+    return new SwipeItUserDetails(user);
+  }
 
-    public String getUsernameOfLoggedInuser() {
-        return ((SwipeItUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-    }
+  public long getIdOfLoggedInUser() {
+    return ((SwipeItUserDetails) SecurityContextHolder.getContext().getAuthentication()
+        .getPrincipal()).getUserId();
+  }
 
-    public String getTypeOfLoggedInUser() {
-        return ((SwipeItUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserType();
-    }
+  public String getUsernameOfLoggedInuser() {
+    return ((SwipeItUserDetails) SecurityContextHolder.getContext().getAuthentication()
+        .getPrincipal()).getUsername();
+  }
+
+  public String getTypeOfLoggedInUser() {
+    return ((SwipeItUserDetails) SecurityContextHolder.getContext().getAuthentication()
+        .getPrincipal()).getUserType();
+  }
 }

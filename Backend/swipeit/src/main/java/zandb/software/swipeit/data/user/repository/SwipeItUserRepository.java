@@ -7,5 +7,5 @@ import zandb.software.swipeit.data.user.SwipeItUser;
 @Repository
 public interface SwipeItUserRepository extends JpaRepository<SwipeItUser, Long> {
 
-    SwipeItUser findByUsername(String username);
+  SwipeItUser findByUsername(String username);
 }

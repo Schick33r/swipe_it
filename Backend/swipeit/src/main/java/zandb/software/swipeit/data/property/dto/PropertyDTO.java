@@ -1,123 +1,124 @@
 package zandb.software.swipeit.data.property.dto;
 
 public class PropertyDTO {
-    private long propertyId;
 
-    private String name;
+  private long propertyId;
 
-    private String description;
+  private String name;
 
-    private String country;
+  private String description;
 
-    private String city;
+  private String country;
 
-    private String postcode;
+  private String city;
 
-    private String address;
+  private String postcode;
 
-    private String addressNumber;
+  private String address;
 
-    private String size;
+  private String addressNumber;
 
-    private String numberOfRooms;
+  private String size;
 
-    private String rentCold;
+  private String numberOfRooms;
 
-    private String rentWarm;
+  private String rentCold;
 
-    public long getPropertyId() {
-        return propertyId;
-    }
+  private String rentWarm;
 
-    public void setPropertyId(long propertyId) {
-        this.propertyId = propertyId;
-    }
+  public long getPropertyId() {
+    return propertyId;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setPropertyId(long propertyId) {
+    this.propertyId = propertyId;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public String getCountry() {
-        return country;
-    }
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
+  public String getCountry() {
+    return country;
+  }
 
-    public String getCity() {
-        return city;
-    }
+  public void setCountry(String country) {
+    this.country = country;
+  }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+  public String getCity() {
+    return city;
+  }
 
-    public String getPostcode() {
-        return postcode;
-    }
+  public void setCity(String city) {
+    this.city = city;
+  }
 
-    public void setPostcode(String postcode) {
-        this.postcode = postcode;
-    }
+  public String getPostcode() {
+    return postcode;
+  }
 
-    public String getAddress() {
-        return address;
-    }
+  public void setPostcode(String postcode) {
+    this.postcode = postcode;
+  }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+  public String getAddress() {
+    return address;
+  }
 
-    public String getAddressNumber() {
-        return addressNumber;
-    }
+  public void setAddress(String address) {
+    this.address = address;
+  }
 
-    public void setAddressNumber(String addressNumber) {
-        this.addressNumber = addressNumber;
-    }
+  public String getAddressNumber() {
+    return addressNumber;
+  }
 
-    public String getSize() {
-        return size;
-    }
+  public void setAddressNumber(String addressNumber) {
+    this.addressNumber = addressNumber;
+  }
 
-    public void setSize(String size) {
-        this.size = size;
-    }
+  public String getSize() {
+    return size;
+  }
 
-    public String getNumberOfRooms() {
-        return numberOfRooms;
-    }
+  public void setSize(String size) {
+    this.size = size;
+  }
 
-    public void setNumberOfRooms(String numberOfRooms) {
-        this.numberOfRooms = numberOfRooms;
-    }
+  public String getNumberOfRooms() {
+    return numberOfRooms;
+  }
 
-    public String getRentCold() {
-        return rentCold;
-    }
+  public void setNumberOfRooms(String numberOfRooms) {
+    this.numberOfRooms = numberOfRooms;
+  }
 
-    public void setRentCold(String rentCold) {
-        this.rentCold = rentCold;
-    }
+  public String getRentCold() {
+    return rentCold;
+  }
 
-    public String getRentWarm() {
-        return rentWarm;
-    }
+  public void setRentCold(String rentCold) {
+    this.rentCold = rentCold;
+  }
 
-    public void setRentWarm(String rentWarm) {
-        this.rentWarm = rentWarm;
-    }
+  public String getRentWarm() {
+    return rentWarm;
+  }
+
+  public void setRentWarm(String rentWarm) {
+    this.rentWarm = rentWarm;
+  }
 }

@@ -6,4 +6,5 @@ import zandb.software.swipeit.data.chat.ChatLine;
 
 @Repository
 public interface ChatLineRepository extends JpaRepository<ChatLine, Long> {
+
 }

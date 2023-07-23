@@ -6,4 +6,5 @@ import zandb.software.swipeit.data.image.PropertyImage;
 
 @Repository
 public interface PropertyImageRepository extends JpaRepository<PropertyImage, Long> {
+
 }

@@ -27,7 +27,7 @@ public class BlacklistedJwtTokenService {
 
   @Scheduled(fixedRate = 60 * 60 * 24 * 1000)
   public void removeExpiredTokens() {
-    blacklistedJwtTokenRepository.removeByExpirationDateAfter(new Date());
+    blacklistedJwtTokenRepository.removeByExpirationDateBefore(new Date());
   }
 
   public boolean isTokenBlacklisted(String token) {

@@ -6,7 +6,7 @@ import zandb.software.swipeit.data.tokenblacklist.BlacklistedJwtToken;
 
 public interface BlacklistedJwtTokenRepository extends JpaRepository<BlacklistedJwtToken, Long> {
 
-  void removeByExpirationDateAfter(Date date);
+  void removeByExpirationDateBefore(Date date);
 
   boolean existsByToken(String token);
 }

@@ -36,8 +36,8 @@ public class ApiSecurityConfig {
     http.csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(auth ->
             auth.requestMatchers("/authenticate").permitAll()
-                .requestMatchers("/register/client").permitAll()
-                .requestMatchers("/register/supplier").permitAll()
+                .requestMatchers("/register").permitAll()
+                .requestMatchers("/register").permitAll()
                 .anyRequest().authenticated())
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

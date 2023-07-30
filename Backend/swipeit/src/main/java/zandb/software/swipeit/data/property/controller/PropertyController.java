@@ -12,7 +12,7 @@ import zandb.software.swipeit.data.property.dto.PropertyDTO;
 import zandb.software.swipeit.data.property.exceptions.PropertyDoesNotBelongToLoggedInUser;
 import zandb.software.swipeit.data.property.exceptions.PropertyNotFoundException;
 import zandb.software.swipeit.data.property.service.PropertyService;
-import zandb.software.swipeit.security.UserIsNotSupplierException;
+import zandb.software.swipeit.data.user.exceptions.UserNotFoundException;
 
 @RestController
 public class PropertyController {
@@ -24,7 +24,7 @@ public class PropertyController {
   public ResponseEntity<?> addProperty(@RequestBody PropertyDTO propertyDTO) {
     try {
       return ResponseEntity.ok(propertyService.createProperty(propertyDTO));
-    } catch (UserIsNotSupplierException e) {
+    } catch (UserNotFoundException e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
@@ -34,7 +34,7 @@ public class PropertyController {
       @PathVariable long id) {
     try {
       return ResponseEntity.ok(propertyService.updateProperty(id, propertyDTO));
-    } catch (UserIsNotSupplierException e) {
+    } catch (UserNotFoundException e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     } catch (PropertyNotFoundException e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -48,7 +48,7 @@ public class PropertyController {
     try {
       propertyService.deleteProperty(id);
       return ResponseEntity.ok().build();
-    } catch (UserIsNotSupplierException e) {
+    } catch (UserNotFoundException e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     } catch (PropertyNotFoundException e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

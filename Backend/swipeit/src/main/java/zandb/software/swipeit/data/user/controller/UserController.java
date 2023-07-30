@@ -7,11 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import zandb.software.swipeit.data.user.dto.ClientDTO;
-import zandb.software.swipeit.data.user.dto.SupplierDTO;
+import zandb.software.swipeit.data.user.dto.SwipeItUserDTO;
 import zandb.software.swipeit.data.user.exceptions.UserNotFoundException;
-import zandb.software.swipeit.data.user.service.ClientService;
-import zandb.software.swipeit.data.user.service.SupplierService;
 import zandb.software.swipeit.data.user.service.SwipeItUserService;
 import zandb.software.swipeit.security.AccessDeniedException;
 
@@ -21,16 +18,10 @@ public class UserController {
   @Autowired
   private SwipeItUserService swipeItUserService;
 
-  @Autowired
-  private ClientService clientService;
-
-  @Autowired
-  private SupplierService supplierService;
-
   @GetMapping("/user")
   public ResponseEntity<?> getClient() {
     try {
-      return ResponseEntity.ok(swipeItUserService.getClient());
+      return ResponseEntity.ok(swipeItUserService.getUser());
     } catch (UserNotFoundException e) {
       return ResponseEntity.badRequest().body(e.getLocalizedMessage());
     } catch (AccessDeniedException e) {
@@ -39,23 +30,10 @@ public class UserController {
   }
 
 
-  @PutMapping("/client")
-  public ResponseEntity<?> updateClientById(@RequestBody ClientDTO clientDTO) {
+  @PutMapping("/user")
+  public ResponseEntity<?> updateUserById(@RequestBody SwipeItUserDTO swipeItUserDTO) {
     try {
-      return ResponseEntity.ok(clientService.updateClient(clientDTO));
-    } catch (AccessDeniedException e) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
-    } catch (UserNotFoundException e) {
-      return ResponseEntity.badRequest().body(e.getMessage());
-    }
-  }
-
-  @PutMapping("/supplier")
-  public ResponseEntity<?> updateSupplierById(@RequestBody SupplierDTO supplierDTO) {
-    try {
-      return ResponseEntity.ok(supplierService.updateClient(supplierDTO));
-    } catch (AccessDeniedException e) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+      return ResponseEntity.ok(swipeItUserService.updateUser(swipeItUserDTO));
     } catch (UserNotFoundException e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }

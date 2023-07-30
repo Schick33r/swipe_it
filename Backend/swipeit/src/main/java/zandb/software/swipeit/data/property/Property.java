@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import zandb.software.swipeit.data.user.Supplier;
+import zandb.software.swipeit.data.user.SwipeItUser;
 
 @Entity
 public class Property {
@@ -38,7 +38,7 @@ public class Property {
 
   @ManyToOne
   @JoinColumn(name = "supplierId")
-  private Supplier owner;
+  private SwipeItUser owner;
 
   public long getPropertyId() {
     return propertyId;
@@ -136,11 +136,12 @@ public class Property {
     this.rentWarm = rentWarm;
   }
 
-  public Supplier getOwner() {
+
+  public SwipeItUser getOwner() {
     return owner;
   }
 
-  public void setOwner(Supplier owner) {
+  public void setOwner(SwipeItUser owner) {
     this.owner = owner;
   }
 

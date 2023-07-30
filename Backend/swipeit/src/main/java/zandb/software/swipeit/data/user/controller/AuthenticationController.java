@@ -13,9 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
-import zandb.software.swipeit.data.user.service.ClientService;
-import zandb.software.swipeit.data.user.service.SupplierService;
 import zandb.software.swipeit.data.user.service.SwipeItUserDetailsService;
+import zandb.software.swipeit.data.user.service.SwipeItUserService;
 import zandb.software.swipeit.security.JwtTokenUtil;
 
 @RestController
@@ -25,10 +24,7 @@ public class AuthenticationController {
   private AuthenticationManager authenticationManager;
 
   @Autowired
-  private SupplierService supplierService;
-
-  @Autowired
-  private ClientService clientService;
+  private SwipeItUserService swipeItUserService;
 
   @Autowired
   private PasswordEncoder passwordEncoder;
@@ -39,20 +35,10 @@ public class AuthenticationController {
   @Autowired
   private JwtTokenUtil jwtTokenUtil;
 
-  @PostMapping("/register/supplier")
-  public ResponseEntity<String> registerSupplier(
+
+  @PostMapping("/register")
+  public ResponseEntity<String> register(
       @RequestHeader("Authorization") String authorizationHeader) {
-    return createAccount(authorizationHeader, true);
-
-  }
-
-  @PostMapping("/register/client")
-  public ResponseEntity<String> registerClient(
-      @RequestHeader("Authorization") String authorizationHeader) {
-    return createAccount(authorizationHeader, false);
-  }
-
-  private ResponseEntity<String> createAccount(String authorizationHeader, boolean supplier) {
     if (!authorizationHeader.startsWith("Basic ")) {
       return ResponseEntity.badRequest().build();
     }
@@ -70,11 +56,7 @@ public class AuthenticationController {
 
     String password = passwordEncoder.encode(usernameAndPassword[1]);
 
-    if (supplier) {
-      supplierService.createSupplierWithUsernameAndPassword(username, password);
-    } else {
-      clientService.createClientWithUsernameAndPassword(username, password);
-    }
+    swipeItUserService.createUserWithUsernameAndPassword(username, password);
 
     return ResponseEntity.ok().build();
   }

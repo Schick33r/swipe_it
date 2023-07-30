@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import zandb.software.swipeit.data.user.Client;
+import zandb.software.swipeit.data.user.SwipeItUser;
 
 @Entity
 public class ClientImage {
@@ -18,5 +18,5 @@ public class ClientImage {
 
   @ManyToOne
   @JoinColumn(name = "client")
-  private Client client;
+  private SwipeItUser client;
 }

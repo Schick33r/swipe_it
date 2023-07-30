@@ -8,11 +8,10 @@ import zandb.software.swipeit.data.property.dto.PropertyDTO;
 import zandb.software.swipeit.data.property.exceptions.PropertyDoesNotBelongToLoggedInUser;
 import zandb.software.swipeit.data.property.exceptions.PropertyNotFoundException;
 import zandb.software.swipeit.data.property.repository.PropertyRepository;
-import zandb.software.swipeit.data.user.Supplier;
-import zandb.software.swipeit.data.user.repository.SupplierRepository;
+import zandb.software.swipeit.data.user.SwipeItUser;
+import zandb.software.swipeit.data.user.exceptions.UserNotFoundException;
+import zandb.software.swipeit.data.user.repository.SwipeItUserRepository;
 import zandb.software.swipeit.data.user.service.SwipeItUserDetailsService;
-import zandb.software.swipeit.data.user.type.UserType;
-import zandb.software.swipeit.security.UserIsNotSupplierException;
 
 @Service
 public class PropertyService {
@@ -21,7 +20,7 @@ public class PropertyService {
   private SwipeItUserDetailsService swipeItUserDetailsService;
 
   @Autowired
-  private SupplierRepository supplierRepository;
+  private SwipeItUserRepository swipeItUserRepository;
 
   @Autowired
   private PropertyRepository propertyRepository;
@@ -30,15 +29,15 @@ public class PropertyService {
   private ModelMapper modelMapper;
 
 
-  public PropertyDTO createProperty(PropertyDTO propertyDTO) throws UserIsNotSupplierException {
-    if (!swipeItUserDetailsService.getTypeOfLoggedInUser().equals(UserType.SUPPLIER.getType())) {
-      throw new UserIsNotSupplierException(
-          "This user is no supplier and can't add any properties!");
-    }
-
+  public PropertyDTO createProperty(PropertyDTO propertyDTO)
+      throws UserNotFoundException {
     final long id = swipeItUserDetailsService.getIdOfLoggedInUser();
 
-    Supplier supplier = supplierRepository.getReferenceById(id);
+    if (swipeItUserRepository.existsById((id))) {
+      throw new UserNotFoundException("There is no user with the id %d".formatted(id));
+    }
+
+    SwipeItUser supplier = swipeItUserRepository.getReferenceById(id);
 
     Property property = modelMapper.map(propertyDTO, Property.class);
 
@@ -48,10 +47,10 @@ public class PropertyService {
   }
 
   public PropertyDTO updateProperty(long propertyId, PropertyDTO propertyDTO)
-      throws UserIsNotSupplierException, PropertyNotFoundException, PropertyDoesNotBelongToLoggedInUser {
+      throws PropertyNotFoundException, PropertyDoesNotBelongToLoggedInUser, UserNotFoundException {
     final long id = getIdOfLoggedInUserAndCheckIfPropertyCanBeUpdatedOrDeleted(propertyId);
 
-    Supplier supplier = supplierRepository.getReferenceById(id);
+    SwipeItUser supplier = swipeItUserRepository.getReferenceById(id);
 
     Property property = modelMapper.map(propertyDTO, Property.class);
 
@@ -61,25 +60,24 @@ public class PropertyService {
   }
 
   public void deleteProperty(long propertyId)
-      throws UserIsNotSupplierException, PropertyNotFoundException, PropertyDoesNotBelongToLoggedInUser {
+      throws PropertyNotFoundException, PropertyDoesNotBelongToLoggedInUser, UserNotFoundException {
     getIdOfLoggedInUserAndCheckIfPropertyCanBeUpdatedOrDeleted(propertyId);
 
     propertyRepository.deleteById(propertyId);
   }
 
   private long getIdOfLoggedInUserAndCheckIfPropertyCanBeUpdatedOrDeleted(long propertyId)
-      throws UserIsNotSupplierException, PropertyNotFoundException, PropertyDoesNotBelongToLoggedInUser {
-    if (!swipeItUserDetailsService.getTypeOfLoggedInUser().equals(UserType.SUPPLIER.getType())) {
-      throw new UserIsNotSupplierException(
-          "This user is no supplier and can therefore not manipulate properties!");
-    }
-
+      throws PropertyNotFoundException, PropertyDoesNotBelongToLoggedInUser, UserNotFoundException {
     if (!propertyRepository.existsById(propertyId)) {
       throw new PropertyNotFoundException(
           "The property with the id %d doesn't exist!".formatted(propertyId));
     }
 
     final long id = swipeItUserDetailsService.getIdOfLoggedInUser();
+
+    if (swipeItUserRepository.existsById((id))) {
+      throw new UserNotFoundException("There is no user with the id %d".formatted(id));
+    }
 
     Property oldProperty = propertyRepository.getReferenceById(propertyId);
 

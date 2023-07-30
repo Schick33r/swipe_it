@@ -31,8 +31,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import zandb.software.swipeit.data.tokenblacklist.BlacklistedJwtToken;
 import zandb.software.swipeit.data.tokenblacklist.repository.BlacklistedJwtTokenRepository;
-import zandb.software.swipeit.data.user.Client;
-import zandb.software.swipeit.data.user.repository.ClientRepository;
+import zandb.software.swipeit.data.user.SwipeItUser;
+import zandb.software.swipeit.data.user.repository.SwipeItUserRepository;
 import zandb.software.swipeit.data.user.service.SwipeItUserDetailsService;
 
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
@@ -52,7 +52,7 @@ public class LogoutControllerDocsTest {
   private BlacklistedJwtTokenRepository blacklistedJwtTokenRepository;
 
   @Autowired
-  private ClientRepository clientRepository;
+  private SwipeItUserRepository swipeItUserRepository;
 
   @BeforeEach
   public void setUp(WebApplicationContext webApplicationContext,
@@ -65,12 +65,12 @@ public class LogoutControllerDocsTest {
 
   @Test
   public void logoutUserDocTest() throws Exception {
-    Client client = new Client();
-    client.setUserId(1);
-    client.setUsername("Test");
-    client.setPassword(passwordEncoder.encode("test"));
+    SwipeItUser user = new SwipeItUser();
+    user.setUserId(1);
+    user.setUsername("Test");
+    user.setPassword(passwordEncoder.encode("test"));
 
-    clientRepository.save(client);
+    swipeItUserRepository.save(user);
 
     UserDetails swipeItUserDetails = swipeItUserDetailsService.loadUserByUsername("Test");
 

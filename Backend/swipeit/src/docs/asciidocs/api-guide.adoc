@@ -1,36 +1,18 @@
-== Register a client
+== Register a user
 
-This request is used to register a new client user on the system. The clients are the users, that are searching for
-a place to live
-
-=== HTTP Request
-
-include::{snippets}/register-client/http-request.adoc[]
-
-=== Request headers
-
-include::{snippets}/register-client/request-headers.adoc[]
-
-=== Response
-
-include::{snippets}/register-client/http-response.adoc[]
-
-== Register a supplier
-
-This request is used to register a new supplier user on the system. The suppliers are users, that are offering
-a place to live
+This request is used to register a new user on the system
 
 === HTTP Request
 
-include::{snippets}/register-supplier/http-request.adoc[]
+include::{snippets}/register-user/http-request.adoc[]
 
 === Request headers
 
-include::{snippets}/register-supplier/request-headers.adoc[]
+include::{snippets}/register-user/request-headers.adoc[]
 
 === Response
 
-include::{snippets}/register-supplier/http-response.adoc[]
+include::{snippets}/register-user/http-response.adoc[]
 
 == Authenticate a user
 
@@ -77,58 +59,32 @@ This request is used to get the information about the logged in user. The authen
 
 === HTTP Request
 
-include::{snippets}/get-user-client/http-request.adoc[]
+include::{snippets}/get-user/http-request.adoc[]
 
 === Request headers
 
-include::{snippets}/get-user-client/request-headers.adoc[]
-
-=== Response if the logged in user is of the type CLIENT
-
-include::{snippets}/get-user-client/http-response.adoc[]
-
-=== Response fields if the logged in user is of the type CLIENT
-
-include::{snippets}/get-user-client/response-fields.adoc[]
-
-=== Response if the logged in user is of the type SUPPLIER
-
-include::{snippets}/get-user-supplier/http-response.adoc[]
-
-=== Response fields if the logged in user is of the type SUPPLIER
-
-include::{snippets}/get-user-supplier/response-fields.adoc[]
-
-== Update the logged in client
-
-This request is used to update the fields of a logged in user of the type CLIENT. It throws an error, if the logged in
-user is of the type SUPPLIER
-
-=== HTTP Request
-
-include::{snippets}/update-user-client/http-request.adoc[]
-
-=== Request headers
-
-include::{snippets}/update-user-client/request-headers.adoc[]
+include::{snippets}/get-user/request-headers.adoc[]
 
 === Response
 
-include::{snippets}/update-user-client/http-response.adoc[]
+include::{snippets}/get-user/http-response.adoc[]
 
-== Update the logged in supplier
+=== Response fields
 
-This request is used to update the fields of a logged in user of the type SUPPLIER. It throws an error, if the logged in
-user is of the type CLIENT
+include::{snippets}/get-user/response-fields.adoc[]
+
+== Update the logged in user
+
+This request is used to update the fields of a logged in user.
 
 === HTTP Request
 
-include::{snippets}/update-user-supplier/http-request.adoc[]
+include::{snippets}/update-user/http-request.adoc[]
 
 === Request headers
 
-include::{snippets}/update-user-supplier/request-headers.adoc[]
+include::{snippets}/update-user/request-headers.adoc[]
 
 === Response
 
-include::{snippets}/update-user-supplier/http-response.adoc[]
+include::{snippets}/update-user/http-response.adoc[]

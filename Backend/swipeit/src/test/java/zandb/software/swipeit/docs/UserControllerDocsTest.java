@@ -31,10 +31,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import zandb.software.swipeit.data.user.Client;
-import zandb.software.swipeit.data.user.Supplier;
-import zandb.software.swipeit.data.user.repository.ClientRepository;
-import zandb.software.swipeit.data.user.repository.SupplierRepository;
+import zandb.software.swipeit.data.user.SwipeItUser;
+import zandb.software.swipeit.data.user.repository.SwipeItUserRepository;
 import zandb.software.swipeit.data.user.service.SwipeItUserDetailsService;
 
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
@@ -45,10 +43,7 @@ public class UserControllerDocsTest {
   private MockMvc mockMvc;
 
   @Autowired
-  private ClientRepository clientRepository;
-
-  @Autowired
-  private SupplierRepository supplierRepository;
+  private SwipeItUserRepository swipeItUserRepository;
 
   @Autowired
   private PasswordEncoder passwordEncoder;
@@ -67,12 +62,12 @@ public class UserControllerDocsTest {
 
   @Test
   public void getUserClientTest() throws Exception {
-    Client client = new Client();
-    client.setUserId(1);
-    client.setUsername("Test");
-    client.setPassword(passwordEncoder.encode("test"));
+    SwipeItUser user = new SwipeItUser();
+    user.setUserId(1);
+    user.setUsername("Test");
+    user.setPassword(passwordEncoder.encode("test"));
 
-    clientRepository.save(client);
+    swipeItUserRepository.save(user);
 
     UserDetails swipeItUserDetails = swipeItUserDetailsService.loadUserByUsername("Test");
 
@@ -86,7 +81,7 @@ public class UserControllerDocsTest {
     this.mockMvc.perform(get("/user").header("Authorization",
             "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUZXN0IiwiaWF0IjoxNjg5NzkzNTUwLCJleHAiOjE3MjEzMjk1NTB9.DbxoXgPgcR1E5MsTqrallAX17yJd_m_I9v6ZH8j2hFYej2A_40syPjAO_UBj5GqaQYIt6zWsdkblLe6jxRXzbA"))
         .andExpect(status().isOk())
-        .andDo(document("get-user-client",
+        .andDo(document("get-user",
             requestHeaders(headerWithName("Authorization").description(
                 "The authorization header using the basic auth method")),
             responseFields(
@@ -102,86 +97,20 @@ public class UserControllerDocsTest {
                 subsectionWithPath("city").description("The city that the user lives in"),
                 subsectionWithPath("biography").description("A short description of the user"),
                 subsectionWithPath("height").description("The height of the user"),
-                subsectionWithPath("age").description("The age of the user")
-            )));
-  }
-
-  @Test
-  public void getUserSupplierTest() throws Exception {
-    Supplier supplier = new Supplier();
-    supplier.setUserId(1);
-    supplier.setUsername("Test");
-    supplier.setPassword(passwordEncoder.encode("test"));
-
-    supplierRepository.save(supplier);
-
-    UserDetails swipeItUserDetails = swipeItUserDetailsService.loadUserByUsername("Test");
-
-    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-        swipeItUserDetails, null, swipeItUserDetails.getAuthorities());
-    usernamePasswordAuthenticationToken
-        .setDetails(new WebAuthenticationDetailsSource());
-
-    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-
-    this.mockMvc.perform(get("/user").header("Authorization",
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUZXN0IiwiaWF0IjoxNjg5NzkzNTUwLCJleHAiOjE3MjEzMjk1NTB9.DbxoXgPgcR1E5MsTqrallAX17yJd_m_I9v6ZH8j2hFYej2A_40syPjAO_UBj5GqaQYIt6zWsdkblLe6jxRXzbA"))
-        .andExpect(status().isOk())
-        .andDo(document("get-user-supplier",
-            requestHeaders(headerWithName("Authorization").description(
-                "The authorization header using the basic auth method")),
-            responseFields(
-                subsectionWithPath("userId").description("The unique id of the user"),
-                subsectionWithPath("username").description("The unique username of the user"),
-                subsectionWithPath("firstName").description("The firstname of the user"),
-                subsectionWithPath("lastName").description("The lastt name of the user"),
-                subsectionWithPath("telephoneNumber").description(
-                    "The telephone number of the user"),
-                subsectionWithPath("userType").description(
-                    "The type of user. Is either CLIENT or SUPPLIER"),
+                subsectionWithPath("age").description("The age of the user"),
                 subsectionWithPath("properties").description(
                     "The list of properties, that this supplier offers")
             )));
   }
 
   @Test
-  public void updateClientTest() throws Exception {
-    Client client = new Client();
-    client.setUserId(1);
-    client.setUsername("Test");
-    client.setPassword(passwordEncoder.encode("test"));
+  public void updateUserTest() throws Exception {
+    SwipeItUser user = new SwipeItUser();
+    user.setUserId(1);
+    user.setUsername("Test");
+    user.setPassword(passwordEncoder.encode("test"));
 
-    clientRepository.save(client);
-
-    UserDetails swipeItUserDetails = swipeItUserDetailsService.loadUserByUsername("Test");
-
-    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-        swipeItUserDetails, null, swipeItUserDetails.getAuthorities());
-    usernamePasswordAuthenticationToken
-        .setDetails(new WebAuthenticationDetailsSource());
-
-    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-
-    this.mockMvc.perform(put("/client")
-            .header("Authorization",
-                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUZXN0IiwiaWF0IjoxNjg5NzkzNTUwLCJleHAiOjE3MjEzMjk1NTB9.DbxoXgPgcR1E5MsTqrallAX17yJd_m_I9v6ZH8j2hFYej2A_40syPjAO_UBj5GqaQYIt6zWsdkblLe6jxRXzbA")
-            .content(
-                "{\"userId\":1,\"username\":\"Test\",\"firstName\":null,\"lastName\":\"New last name\",\"telephoneNumber\":null,\"userType\":\"CLIENT\",\"country\":null,\"city\":null,\"biography\":null,\"height\":0,\"age\":0}")
-            .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk())
-        .andDo(document("update-user-client",
-            requestHeaders(headerWithName("Authorization").description(
-                "The authorization header using the basic auth method"))));
-  }
-
-  @Test
-  public void updateSupplierTest() throws Exception {
-    Supplier supplier = new Supplier();
-    supplier.setUserId(1);
-    supplier.setUsername("Test");
-    supplier.setPassword(passwordEncoder.encode("test"));
-
-    supplierRepository.save(supplier);
+    swipeItUserRepository.save(user);
 
     UserDetails swipeItUserDetails = swipeItUserDetailsService.loadUserByUsername("Test");
 
@@ -192,14 +121,14 @@ public class UserControllerDocsTest {
 
     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
-    this.mockMvc.perform(put("/supplier")
+    this.mockMvc.perform(put("/user")
             .header("Authorization",
                 "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUZXN0IiwiaWF0IjoxNjg5NzkzNTUwLCJleHAiOjE3MjEzMjk1NTB9.DbxoXgPgcR1E5MsTqrallAX17yJd_m_I9v6ZH8j2hFYej2A_40syPjAO_UBj5GqaQYIt6zWsdkblLe6jxRXzbA")
             .content(
-                "{\"userId\":1,\"username\":\"Test\",\"firstName\":null,\"lastName\":\"New last name\",\"telephoneNumber\":null,\"userType\":\"SUPPLIER\",\"properties\":[]}")
+                "{\"userId\":1,\"username\":\"Test\",\"firstName\":null,\"lastName\":\"New last name\",\"telephoneNumber\":null,\"userType\":\"CLIENT\",\"country\":null,\"city\":null,\"biography\":null,\"height\":0,\"age\":0,\"properties\":[]}")
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andDo(document("update-user-supplier",
+        .andDo(document("update-user",
             requestHeaders(headerWithName("Authorization").description(
                 "The authorization header using the basic auth method"))));
   }

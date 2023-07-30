@@ -25,7 +25,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import zandb.software.swipeit.data.user.service.SupplierService;
+import zandb.software.swipeit.data.user.service.SwipeItUserService;
 
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @SpringBootTest
@@ -35,7 +35,7 @@ public class AuthenticationControllerDocsTest {
   private MockMvc mockMvc;
 
   @Autowired
-  private SupplierService supplierService;
+  private SwipeItUserService swipeItUserService;
 
   @Autowired
   private PasswordEncoder passwordEncoder;
@@ -50,26 +50,17 @@ public class AuthenticationControllerDocsTest {
   }
 
   @Test
-  public void registerClientExample() throws Exception {
-    this.mockMvc.perform(post("/register/client").header("Authorization", "Basic VGVzdDp0ZXN0"))
+  public void registerUserExample() throws Exception {
+    this.mockMvc.perform(post("/register").header("Authorization", "Basic VGVzdDp0ZXN0"))
         .andExpect(status().isOk())
-        .andDo(document("register-client",
-            requestHeaders(headerWithName("Authorization").description(
-                "The authorization header using the basic auth method"))));
-  }
-
-  @Test
-  public void registerSupplierExample() throws Exception {
-    this.mockMvc.perform(post("/register/supplier").header("Authorization", "Basic VGVzdDp0ZXN0"))
-        .andExpect(status().isOk())
-        .andDo(document("register-supplier",
+        .andDo(document("register-user",
             requestHeaders(headerWithName("Authorization").description(
                 "The authorization header using the basic auth method"))));
   }
 
   @Test
   public void authenticateUserExample() throws Exception {
-    this.supplierService.createSupplierWithUsernameAndPassword("Test",
+    this.swipeItUserService.createUserWithUsernameAndPassword("Test",
         passwordEncoder.encode("test"));
 
     this.mockMvc.perform(post("/authenticate").header("Authorization", "Basic VGVzdDp0ZXN0"))

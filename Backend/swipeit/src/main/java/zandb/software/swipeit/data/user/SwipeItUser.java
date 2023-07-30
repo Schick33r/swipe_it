@@ -1,20 +1,17 @@
 package zandb.software.swipeit.data.user;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
 import java.util.Set;
 import zandb.software.swipeit.data.chat.Chat;
 import zandb.software.swipeit.data.chat.ChatLine;
+import zandb.software.swipeit.data.property.Property;
+import zandb.software.swipeit.data.user.type.UserType;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "userType")
 public class SwipeItUser {
 
   @Id
@@ -24,6 +21,7 @@ public class SwipeItUser {
   @Column(nullable = false, unique = true)
   private String username;
 
+  @Column(nullable = false, unique = true)
   private String password;
 
   private String firstName;
@@ -32,8 +30,18 @@ public class SwipeItUser {
 
   private String telephoneNumber;
 
-  @Column(insertable = false, updatable = false, nullable = false)
-  private String userType;
+  private String country;
+
+  private String city;
+
+  private String biography;
+
+  private int height;
+
+  private int age;
+
+  @Column(nullable = false)
+  private String userType = UserType.CLIENT.getType();
 
   @OneToMany(mappedBy = "user1")
   private Set<Chat> chatsAsUser1;
@@ -43,6 +51,9 @@ public class SwipeItUser {
 
   @OneToMany(mappedBy = "chatUser")
   private Set<ChatLine> chatLines;
+
+  @OneToMany(mappedBy = "owner")
+  private Set<Property> properties;
 
   public SwipeItUser() {
 
@@ -96,6 +107,54 @@ public class SwipeItUser {
     this.telephoneNumber = telephoneNumber;
   }
 
+  public String getCountry() {
+    return country;
+  }
+
+  public void setCountry(String country) {
+    this.country = country;
+  }
+
+  public String getCity() {
+    return city;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
+  }
+
+  public String getBiography() {
+    return biography;
+  }
+
+  public void setBiography(String biography) {
+    this.biography = biography;
+  }
+
+  public int getHeight() {
+    return height;
+  }
+
+  public void setHeight(int height) {
+    this.height = height;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public void setAge(int age) {
+    this.age = age;
+  }
+
+  public String getUserType() {
+    return userType;
+  }
+
+  public void setUserType(String userType) {
+    this.userType = userType;
+  }
+
   public Set<Chat> getChatsAsUser1() {
     return chatsAsUser1;
   }
@@ -120,12 +179,12 @@ public class SwipeItUser {
     this.chatLines = chatLines;
   }
 
-  public String getUserType() {
-    return userType;
+  public Set<Property> getProperties() {
+    return properties;
   }
 
-  public void setUserType(String userType) {
-    this.userType = userType;
+  public void setProperties(Set<Property> properties) {
+    this.properties = properties;
   }
 
 
